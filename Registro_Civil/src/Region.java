@@ -2,24 +2,24 @@ import java.util.*;
 
 public class Region {
 	private String nombre;
-	private int habitantes;
-	private Hashtable<String,Persona> ht = new Hashtable<>();
+	private Hashtable<String,Persona> mapa = new Hashtable<>();
 	
 	
-	public Region(String nom) {
-		nombre = nom;
-		habitantes = 0;
+	public Region(String nombre) {
+		this.nombre = nombre;
 	}
 	
-	public void agregarPersona(String nom, String rut, int edad) {
-		Persona a = new Persona(nombre,nom,rut,edad);
-		ht.put(rut,a);
-		habitantes++;
+	public void agregarPersona(String nombre, String rut, int edad) {
+		Persona persona = new Persona(this.nombre, nombre, rut, edad);
+		mapa.put(rut, persona);
 	}
 	
-	public Persona buscarPersona(String regionsaza, String rut) {
-		
+	public Persona buscarPersona(String rut) {
+		return this.mapa.get(rut);
+	}
+	
+	public int numHabitantes() {
+		return this.mapa.size();
 	}
 
 }
-
