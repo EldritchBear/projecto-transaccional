@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Registro_Civil {
-
+	
 	public static void main(String[] args) throws IOException{
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 		ArrayList<Region> regiones = inicializarRegiones();
