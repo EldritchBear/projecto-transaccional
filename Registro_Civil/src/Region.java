@@ -14,6 +14,14 @@ public class Region {
 		mapa.put(rut, persona);
 	}
 	
+	public Persona eliminarPersona(Persona persona) {
+		return eliminarPersona(persona.getRut());
+	}
+	
+	public Persona eliminarPersona(String rut) {
+		return this.mapa.remove(rut);
+	}
+	
 	public Persona buscarPersona(String rut) {
 		return this.mapa.get(rut);
 	}
@@ -21,5 +29,9 @@ public class Region {
 	public int numHabitantes() {
 		return this.mapa.size();
 	}
-
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+	// cambiar el nombre de una región no es necesario, por lo tanto, no hay setter
 }
