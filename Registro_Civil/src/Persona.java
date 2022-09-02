@@ -67,4 +67,10 @@ public class Persona {
 	}
 	
 	// no se puede cambiar de región con sólo cambiar su variable, así que un setter sería inutil
+	public void MostrarPersona() {
+		System.out.println(region);
+		System.out.println(nombre);
+		System.out.println(rut);
+		System.out.println(edad);
+	}
 }
