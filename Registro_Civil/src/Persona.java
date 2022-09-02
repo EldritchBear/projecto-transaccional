@@ -12,4 +12,11 @@ public class Persona {
 		rut = rutImportada;
 		edad = edadImportada;
 	}
+	
+	public void MostrarPersona() {
+		System.out.println(region);
+		System.out.println(nombre);
+		System.out.println(rut);
+		System.out.println(edad);
+	}
 }
