@@ -1,16 +1,16 @@
 
 
 public class Persona {
-	private String region;
+	private Region region;
 	private String nombre;
 	private String rut;
 	private int edad;
 	
-	public Persona(String reg, String nom, String rutImportada, int edadImportada) {
-		region = reg;
-		nombre = nom;
-		rut = rutImportada;
-		edad = edadImportada;
+	public Persona(Region region, String nombre, String rut, int edad) {
+		this.region = region;
+		this.nombre = nombre;
+		this.rut = rut;
+		this.edad = edad;
 	}
 	
 	public String validarRut(String rut) {
@@ -40,7 +40,7 @@ public class Persona {
 		return this.rut;
 	}
 	
-	public String getRegion() {
+	public Region getRegion() {
 		return this.region;
 	}
 	
@@ -65,12 +65,17 @@ public class Persona {
 	public void setEdad(int edad) {
 		this.edad = edad;
 	}
-	
-	// no se puede cambiar de región con sólo cambiar su variable, así que un setter sería inutil
+
 	public void MostrarPersona() {
 		System.out.println(region);
 		System.out.println(nombre);
 		System.out.println(rut);
 		System.out.println(edad);
+	}
+
+	public void mover(Region region) {
+		this.region.eliminarPersona(this);
+		this.region = region;
+		this.region.agregarPersona(this);
 	}
 }

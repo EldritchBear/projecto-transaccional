@@ -10,8 +10,12 @@ public class Region {
 	}
 	
 	public void agregarPersona(String nombre, String rut, int edad) {
-		Persona persona = new Persona(this.nombre, nombre, rut, edad);
+		Persona persona = new Persona(this, nombre, rut, edad);
 		mapa.put(rut, persona);
+	}
+
+	public void agregarPersona(Persona persona) {
+		mapa.put(persona.getRut(), persona);
 	}
 	
 	public Persona eliminarPersona(Persona persona) {
