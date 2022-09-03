@@ -6,12 +6,8 @@ public class Registro_Civil {
 	public static void main(String[] args) throws IOException{
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 		ArrayList<Region> regiones = inicializarRegiones();
-		String nom;
-		String rut;
-		int edad;
-		int i;
-		Region region;
-		Persona persona;
+		Persona persona = null;
+		Region region = null;
 		
 		leerTxt(regiones);
 		
@@ -23,14 +19,14 @@ public class Registro_Civil {
 				System.out.println("ingrese el numero de la region a la que pertenece la persona");
 				region = regiones.get(Integer.parseInt(lector.readLine()));
 				System.out.println("ingrese la nombre de la persona");
-				nom = lector.readLine();
-				System.out.println("ingrese la rut de la persona");
-				rut = lector.readLine();
+				String nom = lector.readLine();
+				System.out.println("ingrese l rut de la persona");
+				String rut = lector.readLine();
 				System.out.println("ingrese la edad de la persona");
-				edad = Integer.parseInt(lector.readLine());
+				int edad = Integer.parseInt(lector.readLine());
 				region.agregarPersona(nom,rut,edad);
 			case 2:
-				i = 0;
+				int i = 0;
 				while(regiones.get(i) != null) {
 					region = regiones.get(i);
 					System.out.println("ingrese la rut de la persona que desea buscar");
@@ -52,12 +48,17 @@ public class Registro_Civil {
 			case 3:
 				System.out.println("ingrese la rut de la persona que desea matar");
 				rut = lector.readLine();
-				persona.EliminarPersona(rut);
+				for (int j=0; j < regiones.size(); j++){
+					persona = regiones.get(j).buscarPersona(rut);
+					if (persona != null) {
+						persona.getRegion().eliminarPersona(persona);
+						break;
+					}
+				}
+				default:
+					System.out.println("la opcion ingresada no existe");
 			}
-			case 4:
-				
-			default:
-				System.out.println("la opcion ingresada no existe");
+
 		}
 	}
 	
@@ -76,7 +77,7 @@ public class Registro_Civil {
 	}
 	
 	public static ArrayList<Region> inicializarRegiones() {
-		ArrayList<Region> regiones = new ArrayList<Region>(16);
+		ArrayList<Region> regiones = new ArrayList<Region>(17);
 		regiones.add(new Region("Tarapacá"));
 		regiones.add(new Region("Antofagasta"));
 		regiones.add(new Region("Atacama"));
@@ -93,6 +94,7 @@ public class Registro_Civil {
 		regiones.add(new Region("Los Ríos"));
 		regiones.add(new Region("Arica y Parinacota"));
 		regiones.add(new Region("Ñuble"));
+		regiones.add(new Region("indefinida"));
 		return regiones;
 	}
 	
