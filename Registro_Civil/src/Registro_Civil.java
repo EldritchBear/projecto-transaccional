@@ -16,27 +16,29 @@ public class Registro_Civil {
 			case 0:
 				break;
 			case 1:
-				System.out.println("ingrese el numero de la region a la que pertenece la persona");
-				region = regiones.get(Integer.parseInt(lector.readLine()));
-				System.out.println("ingrese la nombre de la persona");
+				System.out.println("Ingrese el numero de la region a la que pertenece la persona");
+				region = regiones.get(Integer.parseInt(lector.readLine()) - 1);
+				System.out.println("Ingrese la nombre de la persona");
 				String nom = lector.readLine();
-				System.out.println("ingrese l rut de la persona");
+				System.out.println("Ingrese el rut de la persona");
 				String rut = lector.readLine();
-				System.out.println("ingrese la edad de la persona");
+				System.out.println("Ingrese la edad de la persona");
 				int edad = Integer.parseInt(lector.readLine());
 				region.agregarPersona(nom,rut,edad);
+				break;
 			case 2:
 				int i = 0;
-				while(regiones.get(i) != null) {
+				System.out.println("Ingrese el rut de la persona que desea buscar");
+				rut = Persona.validarRut(lector.readLine());
+				System.out.println(rut);
+				while(i <= 16) {
 					region = regiones.get(i);
-					System.out.println("ingrese la rut de la persona que desea buscar");
-					rut = lector.readLine();
 					persona = region.buscarPersona(rut);
 					if(persona == null) {
 						i++;
 					}
 					else {
-						System.out.println("se encontro a la persona");
+						System.out.println("Se encontro a la persona");
 						persona.MostrarPersona();
 						break;
 					}
@@ -45,8 +47,9 @@ public class Registro_Civil {
 				if(persona == null) {
 					System.out.println("la persona que usted busca no existe");
 				}
+				break;
 			case 3:
-				System.out.println("ingrese la rut de la persona que desea matar");
+				System.out.println("Ingrese el rut de la persona que desea matar");
 				rut = lector.readLine();
 				for (int j=0; j < regiones.size(); j++){
 					persona = regiones.get(j).buscarPersona(rut);
@@ -55,7 +58,8 @@ public class Registro_Civil {
 						break;
 					}
 				}
-				default:
+				break;
+			default:
 					System.out.println("la opcion ingresada no existe");
 			}
 
