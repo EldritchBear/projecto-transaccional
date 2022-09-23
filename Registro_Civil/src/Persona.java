@@ -9,11 +9,11 @@ public class Persona {
 	public Persona(Region region, String nombre, String rut, int edad) {
 		this.region = region;
 		this.nombre = nombre;
-		this.rut = rut;
+		this.rut = validarRut(rut);
 		this.edad = edad;
 	}
 	
-	public String validarRut(String rut) {
+	public static String validarRut(String rut) {
 		rut = rut.replaceAll("\\W", ""); // elimina carácteres especiales
 
 		if (rut.length() < 1) return "invalido";
@@ -67,7 +67,7 @@ public class Persona {
 	}
 
 	public void MostrarPersona() {
-		System.out.println(region);
+		System.out.println(region.getNombre());
 		System.out.println(nombre);
 		System.out.println(rut);
 		System.out.println(edad);

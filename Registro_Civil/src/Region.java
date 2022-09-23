@@ -11,7 +11,7 @@ public class Region {
 	
 	public void agregarPersona(String nombre, String rut, int edad) {
 		Persona persona = new Persona(this, nombre, rut, edad);
-		mapa.put(rut, persona);
+		mapa.put(persona.getRut(), persona);
 	}
 
 	public void agregarPersona(Persona persona) {
