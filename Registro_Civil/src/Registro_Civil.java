@@ -6,8 +6,60 @@ public class Registro_Civil {
 	public static void main(String[] args) throws IOException{
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
 		ArrayList<Region> regiones = inicializarRegiones();
+		Persona persona = null;
+		Region region = null;
+		
 		leerTxt(regiones);
-		Menu(regiones);
+		
+		while(true) {
+			switch(leerMenu()) {
+			case 0:
+				break;
+			case 1:
+				System.out.println("ingrese el numero de la region a la que pertenece la persona");
+				region = regiones.get(Integer.parseInt(lector.readLine()));
+				System.out.println("ingrese la nombre de la persona");
+				String nom = lector.readLine();
+				System.out.println("ingrese l rut de la persona");
+				String rut = lector.readLine();
+				System.out.println("ingrese la edad de la persona");
+				int edad = Integer.parseInt(lector.readLine());
+				region.agregarPersona(nom,rut,edad);
+			case 2:
+				int i = 0;
+				while(regiones.get(i) != null) {
+					region = regiones.get(i);
+					System.out.println("ingrese la rut de la persona que desea buscar");
+					rut = lector.readLine();
+					persona = region.buscarPersona(rut);
+					if(persona == null) {
+						i++;
+					}
+					else {
+						System.out.println("se encontro a la persona");
+						persona.MostrarPersona();
+						break;
+					}
+				}
+				
+				if(persona == null) {
+					System.out.println("la persona que usted busca no existe");
+				}
+			case 3:
+				System.out.println("ingrese la rut de la persona que desea matar");
+				rut = lector.readLine();
+				for (int j=0; j < regiones.size(); j++){
+					persona = regiones.get(j).buscarPersona(rut);
+					if (persona != null) {
+						persona.getRegion().eliminarPersona(persona);
+						break;
+					}
+				}
+				default:
+					System.out.println("la opcion ingresada no existe");
+			}
+
+		}
 	}
 	
 	public static void leerTxt(ArrayList<Region> regiones) throws IOException {
@@ -25,7 +77,7 @@ public class Registro_Civil {
 	}
 	
 	public static ArrayList<Region> inicializarRegiones() {
-		ArrayList<Region> regiones = new ArrayList<Region>(16);
+		ArrayList<Region> regiones = new ArrayList<Region>(17);
 		regiones.add(new Region("Tarapacá"));
 		regiones.add(new Region("Antofagasta"));
 		regiones.add(new Region("Atacama"));
@@ -42,83 +94,18 @@ public class Registro_Civil {
 		regiones.add(new Region("Los Ríos"));
 		regiones.add(new Region("Arica y Parinacota"));
 		regiones.add(new Region("Ñuble"));
+		regiones.add(new Region("indefinida"));
 		return regiones;
 	}
 	
-	public static int Menu(ArrayList<Region>regiones) throws IOException{
-		String nom;
-		String rut;
-		int edad;
-		int i;
-		boolean flag;
-		Region region;
-		Persona persona;
+	public static int leerMenu() throws IOException{
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
-		
-		while(true) {
-			System.out.println("Selecione una de las siguientes opciones");
-			System.out.println("1. Agregar persona");
-			System.out.println("2. Buscar persona");
-			System.out.println("3. Matar persona");
-			System.out.println("4. Numero de habitantes");
-			System.out.println("0. salir");
-			switch(Integer.parseInt(lector.readLine())) {
-			case 0:
-				break;
-			case 1:
-				System.out.println("ingrese el numero de la region a la que pertenece la persona");
-				region = regiones.get(Integer.parseInt(lector.readLine()));
-				System.out.println("ingrese la nombre de la persona");
-				nom = lector.readLine();
-				System.out.println("ingrese la rut de la persona");
-				rut = lector.readLine();
-				System.out.println("ingrese la edad de la persona");
-				edad = Integer.parseInt(lector.readLine());
-				region.agregarPersona(nom,rut,edad);
-			case 2:
-				i = 0;
-				System.out.println("ingrese la rut de la persona que desea buscar");
-				rut = lector.readLine();
-				flag = false;
-				while(regiones.get(i) != null) {
-					region = regiones.get(i);
-					persona = region.buscarPersona(rut);
-					if(persona != null) {
-						System.out.println("se encontro a la persona");
-						persona.MostrarPersona();
-						flag = true;
-						break;
-					}
-					i++;
-				}
-				
-				if(flag) {
-					System.out.println("la persona que usted busca no existe");
-				}
-			case 3:
-				i = 0;
-				System.out.println("ingrese la rut de la persona que desea buscar");
-				rut = lector.readLine();
-				flag= false;
-				while(regiones.get(i) != null) {
-					region = regiones.get(i);
-					persona = region.buscarPersona(rut);
-					if(persona != null) {
-						System.out.println("");
-						region.eliminarPersona(persona);
-						flag = true;
-						break;
-					}
-					i++;
-				}
-				if(flag) {
-					System.out.println("la persona que usted desea eliminar no existe");
-				}
-			case 4:
-				
-			default:
-				System.out.println("la opcion ingresada no existe");
-			}
-		}
+		System.out.println("Selecione una de las siguientes opciones");
+		System.out.println("1. Agregar persona");
+		System.out.println("2. Buscar persona");
+		System.out.println("3. Matar persona");
+		System.out.println("4. Numero de habitantes");
+		System.out.println("0. salir");
+		return Integer.parseInt(lector.readLine());
 	}
 }
