@@ -2,7 +2,7 @@
 public class Funcionario extends Persona{
 	private String funcion;
 	
-	public Funcionario(String reg, String nom, String rutImportada, int edadImportada, String funcionImportada) {
+	public Funcionario(Region reg, String nom, String rutImportada, int edadImportada, String funcionImportada) {
 		super(reg,nom,rutImportada,edadImportada);
 		funcion = funcionImportada;
 	}

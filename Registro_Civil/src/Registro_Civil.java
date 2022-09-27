@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import javax.swing.*;
 
 public class Registro_Civil {
 	
@@ -8,13 +9,15 @@ public class Registro_Civil {
 		ArrayList<Region> regiones = inicializarRegiones();
 		Persona persona = null;
 		Region region = null;
+
+		inicializar();
 		
 		leerTxt(regiones);
 		
 		while(true) {
 			switch(leerMenu()) {
 			case 0:
-				break;
+				return;
 			case 1:
 				System.out.println("Ingrese el numero de la region a la que pertenece la persona");
 				region = regiones.get(Integer.parseInt(lector.readLine()) - 1);
@@ -111,5 +114,11 @@ public class Registro_Civil {
 		System.out.println("4. Numero de habitantes");
 		System.out.println("0. salir");
 		return Integer.parseInt(lector.readLine());
+	}
+
+	public static void inicializar() {
+		JFrame ventana = new JFrame("Ventana");
+		ventana.setContentPane(new Ventana().panel);
+		ventana.setVisible(true);
 	}
 }
