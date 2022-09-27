@@ -2,7 +2,7 @@ public class Ciudadano extends Persona{
 	private boolean extranjero;
 	private int ingreso;
 	
-	public Ciudadano (String reg, String nom, String rutImportada, int edadImportada, boolean esExtranjero, int ingreso) {
+	public Ciudadano (Region reg, String nom, String rutImportada, int edadImportada, boolean esExtranjero, int ingreso) {
 		super(reg,nom,rutImportada,edadImportada);
 		extranjero = esExtranjero;
 		this.ingreso = ingreso;
