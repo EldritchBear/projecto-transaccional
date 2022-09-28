@@ -2,15 +2,18 @@ import java.util.*;
 
 public class Region {
 	private String nombre;
+	private int num;
 	private Hashtable<String,Persona> mapa = new Hashtable<>();
 	
 	
-	public Region(String nombre) {
+	public Region(String nombre, int num) {
+		this.num = num;
 		this.nombre = nombre;
 	}
 	
-	public void agregarPersona(String nombre, String rut, int edad) {
+	public void agregarPersona(String nombre, String rut, int edad) throws RutException {
 		Persona persona = new Persona(this, nombre, rut, edad);
+		if (persona.getRut().equals("invalido")) throw new RutException();
 		mapa.put(persona.getRut(), persona);
 	}
 
@@ -38,4 +41,12 @@ public class Region {
 		return this.nombre;
 	}
 	// cambiar el nombre de una región no es necesario, por lo tanto, no hay setter
+
+	public Object[] getArray() {
+		return mapa.values().toArray();
+	}
+
+	public int getNum() {
+		return this.num;
+	}
 }
