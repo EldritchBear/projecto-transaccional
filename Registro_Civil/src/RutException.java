@@ -3,4 +3,3 @@ public class RutException extends Exception {
         super("El rut introducido no es válido");
     }
 }
-
