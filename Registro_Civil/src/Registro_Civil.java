@@ -1,124 +1,23 @@
-import java.util.*;
-import java.io.*;
 import javax.swing.*;
 
 public class Registro_Civil {
 	
-	public static void main(String[] args) throws IOException{
-		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
-		ArrayList<Region> regiones = inicializarRegiones();
-		Persona persona = null;
-		Region region = null;
-
-		inicializar();
-		
-		leerTxt(regiones);
-		
-		while(true) {
-			switch(leerMenu()) {
-			case 0:
-				return;
-			case 1:
-				System.out.println("Ingrese el numero de la region a la que pertenece la persona");
-				region = regiones.get(Integer.parseInt(lector.readLine()) - 1);
-				System.out.println("Ingrese la nombre de la persona");
-				String nom = lector.readLine();
-				System.out.println("Ingrese el rut de la persona");
-				String rut = lector.readLine();
-				System.out.println("Ingrese la edad de la persona");
-				int edad = Integer.parseInt(lector.readLine());
-				region.agregarPersona(nom,rut,edad);
-				break;
-			case 2:
-				int i = 0;
-				System.out.println("Ingrese el rut de la persona que desea buscar");
-				rut = Persona.validarRut(lector.readLine());
-				System.out.println(rut);
-				while(i <= 16) {
-					region = regiones.get(i);
-					persona = region.buscarPersona(rut);
-					if(persona == null) {
-						i++;
-					}
-					else {
-						System.out.println("Se encontro a la persona");
-						persona.MostrarPersona();
-						break;
-					}
-				}
-				
-				if(persona == null) {
-					System.out.println("la persona que usted busca no existe");
-				}
-				break;
-			case 3:
-				System.out.println("Ingrese el rut de la persona que desea matar");
-				rut = lector.readLine();
-				for (int j=0; j < regiones.size(); j++){
-					persona = regiones.get(j).buscarPersona(rut);
-					if (persona != null) {
-						persona.getRegion().eliminarPersona(persona);
-						break;
-					}
-				}
-				break;
-			default:
-					System.out.println("la opcion ingresada no existe");
-			}
-
+	public static void main(String[] args) {
+		Regiones regiones = new Regiones();
+		try {
+			regiones.leerTxt("registro.txt");
+		} catch (Exception e) {
+			System.out.println("No se pudo leer el archivo registro.txt");
 		}
-	}
-	
-	public static void leerTxt(ArrayList<Region> regiones) throws IOException {
-		String filepath = "registro.txt";
-		BufferedReader lectorLineas = new BufferedReader(new FileReader(filepath));
-		String lineText = null;
-		
-		while( ((lineText = lectorLineas.readLine())) != null) {
-			String[] tokens = lineText.split(",");
-			Region region = regiones.get(Integer.parseInt(tokens[0]) - 1); // [0] = num region, [1] = nombre, [2] = rut, [3] = edad
-			region.agregarPersona(tokens[1], tokens[2], Integer.parseInt(tokens[3]));
-		}
-		
-		lectorLineas.close();
-	}
-	
-	public static ArrayList<Region> inicializarRegiones() {
-		ArrayList<Region> regiones = new ArrayList<Region>(17);
-		regiones.add(new Region("Tarapacá"));
-		regiones.add(new Region("Antofagasta"));
-		regiones.add(new Region("Atacama"));
-		regiones.add(new Region("Coquimbo"));
-		regiones.add(new Region("Valparaíso"));
-		regiones.add(new Region("Libertador General Bernardo O’Higgins"));
-		regiones.add(new Region("Maule"));
-		regiones.add(new Region("Biobío"));
-		regiones.add(new Region("La Araucanía"));
-		regiones.add(new Region("Los Lagos"));
-		regiones.add(new Region("Aysén del General Carlos Ibáñez del Campo"));
-		regiones.add(new Region("Magallanes y Antártica Chilena"));
-		regiones.add(new Region("Metropolitana de Santiago"));
-		regiones.add(new Region("Los Ríos"));
-		regiones.add(new Region("Arica y Parinacota"));
-		regiones.add(new Region("Ñuble"));
-		regiones.add(new Region("indefinida"));
-		return regiones;
-	}
-	
-	public static int leerMenu() throws IOException{
-		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Selecione una de las siguientes opciones");
-		System.out.println("1. Agregar persona");
-		System.out.println("2. Buscar persona");
-		System.out.println("3. Matar persona");
-		System.out.println("4. Numero de habitantes");
-		System.out.println("0. salir");
-		return Integer.parseInt(lector.readLine());
+		JFrame frame = inicializarVentana();
+		new VentanaMenu(regiones, frame);
+		frame.setSize(512, 512);
 	}
 
-	public static void inicializar() {
-		JFrame ventana = new JFrame("Ventana");
-		ventana.setContentPane(new Ventana().panel);
-		ventana.setVisible(true);
+	public static JFrame inicializarVentana() {
+		JFrame frame = new JFrame("Menú");
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		return frame;
 	}
 }
