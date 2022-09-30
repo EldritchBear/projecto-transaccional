@@ -3,7 +3,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class VentanaLista {
     public JPanel panel;
@@ -13,14 +12,17 @@ public class VentanaLista {
     private JButton eliminarButton;
     private JTextField filtroT;
     private JButton filtrarButton;
+    private JComboBox regionSeleccionada;
     private Regiones regiones;
     private JFrame frame;
+
+    private Region region = null;
 
     public VentanaLista(Regiones regiones, JFrame frame) {
         this.regiones = regiones;
         this.frame = frame;
 
-        Object[] arreglo;
+        ArrayList<Persona> arreglo;
         String[] column = {"Región", "Nombre", "Rut", "Edad"};
         DefaultTableModel tableModel = new DefaultTableModel(column, 0);
 
@@ -29,11 +31,9 @@ public class VentanaLista {
 
         for (int i = 1; i < 16; i++) {
             try {arreglo = regiones.getRegion(i).getArray();} catch(Exception e) {continue;}
-            if (arreglo.length == 0) continue;
-            for (Object o : arreglo) {
-                Persona persona = (Persona) o;
-                Object[] objs = {persona.getRegion().getNombre(), persona.getNombre(), persona.getRut(), persona.getEdad()};
-                tableModel.addRow(objs);
+            if (arreglo.size() == 0) continue;
+            for (Persona persona : arreglo) {
+                tableModel.addRow(persona.getObjs());
             }
         }
 
@@ -71,7 +71,12 @@ public class VentanaLista {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String filtro = filtroT.getText();
-                ArrayList<Persona> personas = regiones.getPersonas();
+                ArrayList<Persona> personas;
+                if (region == null) {
+                    personas = regiones.getPersonas();
+                } else {
+                    personas = region.getArray();
+                }
                 DefaultTableModel nuevoModel = new DefaultTableModel(column, 0);
                 for (Persona persona : personas) {
                     if (filtro.length() == 0 || persona.getRegion().getNombre().contains(filtro) || persona.getNombre().contains(filtro) ||
@@ -81,6 +86,19 @@ public class VentanaLista {
                     }
                 }
                 table.setModel(nuevoModel);
+            }
+        });
+        regionSeleccionada.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String stringSeleccion = (String)regionSeleccionada.getSelectedItem();
+                stringSeleccion = String.valueOf(stringSeleccion.charAt(0));
+                try {
+                    region = regiones.getRegion(Integer.parseInt(stringSeleccion));
+                } catch (Exception exc) {
+                    System.out.println("Región no encontrada");
+                    region = null;
+                }
             }
         });
     }

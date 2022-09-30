@@ -66,11 +66,8 @@ public class Persona {
 		this.edad = edad;
 	}
 
-	public void MostrarPersona() {
-		System.out.println(region.getNombre());
-		System.out.println(nombre);
-		System.out.println(rut);
-		System.out.println(edad);
+	public Object[] getObjs() {
+		return new Object[]{this.getRegion().getNombre(), this.getNombre(), this.getRut(), this.getEdad()};
 	}
 
 	public void mover(Region region) {
