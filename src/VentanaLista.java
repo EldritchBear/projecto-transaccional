@@ -14,8 +14,6 @@ public class VentanaLista {
     private JButton filtrarButton;
     private JComboBox regionSeleccionada;
     private Regiones regiones;
-    private JFrame frame;
-
     private Region region = null;
 
     public void refresh() {
@@ -47,73 +45,60 @@ public class VentanaLista {
 
     public VentanaLista(Regiones regiones, JFrame frame) {
         this.regiones = regiones;
-        this.frame = frame;
         this.refresh();
-        volverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new VentanaMenu(regiones, frame).panel);
-                frame.setSize(512, 512);
-            }
+        volverButton.addActionListener(e -> {
+            frame.setContentPane(new VentanaMenu(regiones, frame).panel);
+            frame.setSize(512, 512);
         });
-        eliminarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-                int[] seleccionadas = table.getSelectedRows();
-                if (seleccionadas.length == 0) return;
-                for (int i : seleccionadas) {
-                    String rut = (String) tableModel.getValueAt(i, 2);
-                    Persona persona = regiones.buscarPersona(rut);
+        eliminarButton.addActionListener(e -> {
+            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+            int[] seleccionadas = table.getSelectedRows();
+            if (seleccionadas.length == 0) return;
+            for (int i : seleccionadas) {
+                String rut = (String) tableModel.getValueAt(i, 2);
+                Persona persona = regiones.buscarPersona(rut);
 
-                    persona.getRegion().eliminarPersona(persona);
-                }
-
-                int eliminadas = 0;
-                for (int pos : seleccionadas) {
-                    tableModel.removeRow(pos - eliminadas);
-                    eliminadas++;
-                }
-
-
+                persona.getRegion().eliminarPersona(persona);
             }
+
+            int eliminadas = 0;
+            for (int pos : seleccionadas) {
+                tableModel.removeRow(pos - eliminadas);
+                eliminadas++;
+            }
+
+
         });
 
-        filtrarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String filtro = filtroT.getText();
-                System.out.println(filtro);
-                ArrayList<Persona> personas;
-                if (region == null) {
-                    personas = regiones.getPersonas();
-                } else {
-                    personas = region.getArray();
-                }
-                String[] column = {"Región", "Nombre", "Rut", "Edad"};
-                DefaultTableModel nuevoModel = new DefaultTableModel(column, 0);
-                for (Persona persona : personas) {
-                    if (filtro.length() == 0 || persona.getRegion().getNombre().contains(filtro) || persona.getNombre().contains(filtro) ||
-                            persona.getRut().contains(filtro) || String.valueOf(persona.getEdad()).contains(filtro)) {
-                        Object[] objs = {persona.getRegion().getNombre(), persona.getNombre(), persona.getRut(), persona.getEdad()};
-                        nuevoModel.addRow(objs);
-                    }
-                }
-                table.setModel(nuevoModel);
+        filtrarButton.addActionListener(e -> {
+            String filtro = filtroT.getText();
+            System.out.println(filtro);
+            ArrayList<Persona> personas;
+            if (region == null) {
+                personas = regiones.getPersonas();
+            } else {
+                personas = region.getArray();
             }
+            String[] column = {"Región", "Nombre", "Rut", "Edad"};
+            DefaultTableModel nuevoModel = new DefaultTableModel(column, 0);
+            for (Persona persona : personas) {
+                if (filtro.length() == 0 || persona.getRegion().getNombre().contains(filtro) || persona.getNombre().contains(filtro) ||
+                        persona.getRut().contains(filtro) || String.valueOf(persona.getEdad()).contains(filtro)) {
+                    Object[] objs = {persona.getRegion().getNombre(), persona.getNombre(), persona.getRut(), persona.getEdad()};
+                    nuevoModel.addRow(objs);
+                }
+            }
+            table.setModel(nuevoModel);
         });
-        regionSeleccionada.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String stringSeleccion = ((String)regionSeleccionada.getSelectedItem()).substring(0, 2);
-                try {
-                    int i = Integer.parseInt(stringSeleccion.replaceAll("\\.", "")); // elimina punto
-                    region = regiones.getRegion(i);
-                } catch (Exception exc) {
-                    region = null;
-                }
-                refresh();
+        regionSeleccionada.addActionListener(e -> {
+            String stringSeleccion = ((String)regionSeleccionada.getSelectedItem()).substring(0, 2);
+            try {
+                int i = Integer.parseInt(stringSeleccion.replaceAll("\\.", "")); // elimina punto
+                region = regiones.getRegion(i);
+            } catch (Exception exc) {
+                region = null;
             }
+            refresh();
         });
     }
 
