@@ -76,7 +76,7 @@ public class Regiones {
         // función que retorne lista de habitantes juntando cada getArray() de cada región
         ArrayList lista = new ArrayList<Region>();
         for (Region region : this.regiones) {
-            lista.addAll(Arrays.stream(region.getArray()).toList());
+            lista.addAll(region.getArray());
         }
         return lista;
     }

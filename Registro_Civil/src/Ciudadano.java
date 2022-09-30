@@ -1,11 +1,9 @@
 public class Ciudadano extends Persona{
 	private boolean extranjero;
-	private int ingreso;
 	
-	public Ciudadano (Region reg, String nom, String rutImportada, int edadImportada, boolean esExtranjero, int ingreso) {
+	public Ciudadano (Region reg, String nom, String rutImportada, int edadImportada, boolean esExtranjero) {
 		super(reg,nom,rutImportada,edadImportada);
 		extranjero = esExtranjero;
-		this.ingreso = ingreso;
 	}
 	
 	public void mostrarPersona() {
@@ -19,6 +17,5 @@ public class Ciudadano extends Persona{
 		else {
 			System.out.println("es chileno");
 		}
-		System.out.println(ingreso);
 	}
 }

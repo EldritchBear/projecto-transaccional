@@ -14,6 +14,9 @@ public class VentanaAgregar {
     public JPanel panel;
     private JButton agregarButton;
     private JButton cancelarButton;
+    private JCheckBox funcionarioCheckBox;
+    private JCheckBox extranjeroCheckBox;
+    private JTextField textField1;
 
     private Regiones regiones;
     private JFrame ventana;
@@ -45,6 +48,16 @@ public class VentanaAgregar {
 
                 ventana.setContentPane(new VentanaMenu(regiones, ventana).panel);
                 ventana.setSize(512, 512);
+            }
+        });
+        funcionarioCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (funcionarioCheckBox.isSelected()) {
+                    extranjeroCheckBox.setEnabled(false);
+                } else {
+                    extranjeroCheckBox.setEnabled(true);
+                }
             }
         });
     }
