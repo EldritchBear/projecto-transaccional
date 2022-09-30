@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// se podría agregar otro botón
+
 public class VentanaMenu {
     private JLabel Menú;
     private JButton listaDePersonasButton;

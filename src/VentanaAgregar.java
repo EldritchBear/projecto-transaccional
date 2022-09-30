@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// falta implementar checkboxes para crear Personas tipo Extranjero y Funcionario
+// se podría usar una sobrecarga para crearPersona(), una que reciba un bool y otra que reciba un String con la función
+// revisar si una checkbox está seleccionada al momento de presionar el botón de agregar
+
 public class VentanaAgregar {
     private JTextField regionT;
     private JTextField nombreT;
@@ -16,13 +20,14 @@ public class VentanaAgregar {
     private JButton cancelarButton;
     private JCheckBox funcionarioCheckBox;
     private JCheckBox extranjeroCheckBox;
-    private JTextField textField1;
+    private JTextField funcionT;
 
     private Regiones regiones;
     private JFrame ventana;
     public VentanaAgregar(Regiones regiones, JFrame ventana) {
         this.regiones = regiones;
         this.ventana = ventana;
+        funcionT.setEnabled(false);
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,8 +60,20 @@ public class VentanaAgregar {
             public void actionPerformed(ActionEvent e) {
                 if (funcionarioCheckBox.isSelected()) {
                     extranjeroCheckBox.setEnabled(false);
+                    funcionT.setEnabled(true);
                 } else {
                     extranjeroCheckBox.setEnabled(true);
+                    funcionT.setEnabled(false);
+                }
+            }
+        });
+        extranjeroCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (extranjeroCheckBox.isSelected()) {
+                    funcionarioCheckBox.setEnabled(false);
+                } else {
+                    funcionarioCheckBox.setEnabled(true);
                 }
             }
         });
