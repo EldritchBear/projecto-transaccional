@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Regiones {
@@ -33,7 +35,7 @@ public class Regiones {
 
         while( ((lineText = lectorLineas.readLine())) != null) {
             String[] tokens = lineText.split(",");
-            Region region = this.regiones.get(Integer.parseInt(tokens[0])); // [0] = num region, [1] = nombre, [2] = rut, [3] = edad
+            Region region = this.regiones.get(Integer.parseInt(tokens[0]) - 1); // [0] = num region, [1] = nombre, [2] = rut, [3] = edad
             try {
                 region.agregarPersona(tokens[1], tokens[2], Integer.parseInt(tokens[3]));
             } catch (Exception e){
@@ -45,11 +47,16 @@ public class Regiones {
     }
 
     public void escribirTxt(String filepath) throws IOException {
-        BufferedReader lectorLineas = new BufferedReader(new FileReader(filepath));
-        String lineText = null;
+        FileWriter escritor = new FileWriter(filepath, false);
+        String linea = null;
         // usar getPersonas() y recorrer
         //(persona.getRegion().getNum() +","+ persona.getNombre() +","+ persona.getRut() +","+ persona.getEdad())
-        lectorLineas.close();
+        for (Persona persona : this.getPersonas()) {
+            linea = (persona.getRegion().getNum() +","+ persona.getNombre() +","+ persona.getRut() +","+ persona.getEdad());
+            escritor.write(linea);
+            escritor.write(System.getProperty("line.separator")); //escribe newline
+        }
+        escritor.close();
     }
 
     public Region getRegion(int i) throws RegionException {
@@ -65,9 +72,12 @@ public class Regiones {
         return null;
     }
 
-    public Vector<Persona> getPersonas() {
-        Vector<Persona> personas = new Vector<>();
-        // función que retorne vector de habitantes juntando cada getArray() de cada región
-        return personas;
+    public ArrayList<Persona> getPersonas() {
+        // función que retorne lista de habitantes juntando cada getArray() de cada región
+        ArrayList lista = new ArrayList<Region>();
+        for (Region region : this.regiones) {
+            lista.addAll(Arrays.stream(region.getArray()).toList());
+        }
+        return lista;
     }
 }
