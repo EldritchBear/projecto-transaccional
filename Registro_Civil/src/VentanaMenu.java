@@ -6,7 +6,6 @@ public class VentanaMenu {
     private JLabel Menú;
     private JButton listaDePersonasButton;
     private JButton agregarPersonaButton;
-    private JButton buscarPersonaButton;
     public JPanel panel;
     private Regiones regiones;
     private JFrame ventana;

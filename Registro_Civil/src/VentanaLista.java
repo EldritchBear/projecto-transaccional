@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class VentanaLista {
     public JPanel panel;
@@ -45,6 +47,7 @@ public class VentanaLista {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
                 int[] seleccionadas = table.getSelectedRows();
                 if (seleccionadas.length == 0) return;
                 for (int i : seleccionadas) {
@@ -64,6 +67,22 @@ public class VentanaLista {
             }
         });
 
+        filtrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String filtro = filtroT.getText();
+                ArrayList<Persona> personas = regiones.getPersonas();
+                DefaultTableModel nuevoModel = new DefaultTableModel(column, 0);
+                for (Persona persona : personas) {
+                    if (filtro.length() == 0 || persona.getRegion().getNombre().contains(filtro) || persona.getNombre().contains(filtro) ||
+                            persona.getRut().contains(filtro) || String.valueOf(persona.getEdad()).contains(filtro)) {
+                        Object[] objs = {persona.getRegion().getNombre(), persona.getNombre(), persona.getRut(), persona.getEdad()};
+                        nuevoModel.addRow(objs);
+                    }
+                }
+                table.setModel(nuevoModel);
+            }
+        });
     }
 
 }
