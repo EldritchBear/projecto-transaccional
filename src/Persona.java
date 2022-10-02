@@ -67,7 +67,7 @@ public class Persona {
 	}
 
 	public Object[] getObjs() {
-		return new Object[]{this.getRegion().getNombre(), this.getNombre(), this.getRut(), this.getEdad()};
+		return new Object[]{this.getRegion().getNombre(), this.nombre, this.rut, this.edad, "Ciudadano", "Chileno"};
 	}
 
 	public void mover(Region region) {

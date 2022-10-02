@@ -14,4 +14,9 @@ public class Funcionario extends Persona{
 		System.out.println(getEdad());
 		System.out.println(funcion);
 	}
+
+	public Object[] getObjs() {
+		return new Object[]{this.getRegion().getNombre(), this.getNombre(), this.getRut(), this.getEdad(), this.funcion,
+				"Chileno"};
+	}
 }

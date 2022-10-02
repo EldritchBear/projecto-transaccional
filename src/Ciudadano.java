@@ -18,4 +18,14 @@ public class Ciudadano extends Persona{
 			System.out.println("es chileno");
 		}
 	}
+	public Object[] getObjs() {
+		String nacionalidad;
+		if (extranjero) {
+			nacionalidad = "Extranjero";
+		} else {
+			nacionalidad = "Chileno";
+		}
+		return new Object[]{this.getRegion().getNombre(), this.getNombre(), this.getRut(), this.getEdad(), "Ciudadano",
+				nacionalidad};
+	}
 }

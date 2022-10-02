@@ -1,9 +1,8 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+// Ventana que muestra una lista con los habitantes registrados
 public class VentanaLista {
     public JPanel panel;
     private JScrollPane scrollPane;
@@ -18,7 +17,7 @@ public class VentanaLista {
 
     public void refresh() {
         ArrayList<Persona> arreglo;
-        String[] column = {"Región", "Nombre", "Rut", "Edad"};
+        String[] column = {"Región", "Nombre", "Rut", "Edad", "Función", "Nacionalidad"};
         DefaultTableModel tableModel = new DefaultTableModel(column, 0);
         table.setDefaultEditor(Object.class, null);
 
@@ -79,13 +78,21 @@ public class VentanaLista {
             } else {
                 personas = region.getArray();
             }
-            String[] column = {"Región", "Nombre", "Rut", "Edad"};
+            String[] column = {"Región", "Nombre", "Rut", "Edad", "Función", "Nacionalidad"};
             DefaultTableModel nuevoModel = new DefaultTableModel(column, 0);
             for (Persona persona : personas) {
-                if (filtro.length() == 0 || persona.getRegion().getNombre().contains(filtro) || persona.getNombre().contains(filtro) ||
-                        persona.getRut().contains(filtro) || String.valueOf(persona.getEdad()).contains(filtro)) {
-                    Object[] objs = {persona.getRegion().getNombre(), persona.getNombre(), persona.getRut(), persona.getEdad()};
-                    nuevoModel.addRow(objs);
+                Object[] objs = persona.getObjs();
+                for (Object obj : objs) { // revisa si alguno de sus campos contiene el filtro
+                    String string;
+                    if (obj instanceof String) {
+                        string = (String) obj;
+                    } else {
+                        string = String.valueOf(obj);
+                    }
+                    if (string.contains(filtro)) {
+                        nuevoModel.addRow(objs);
+                        break;
+                    }
                 }
             }
             table.setModel(nuevoModel);

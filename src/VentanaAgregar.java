@@ -33,12 +33,17 @@ public class VentanaAgregar {
             int ed = Integer.parseInt(edadT.getText());
 
             try {
-                regiones.getRegion(reg).agregarPersona(nom, r, ed);
+                if (!funcionarioCheckBox.isSelected() & !extranjeroCheckBox.isSelected())
+                    regiones.getRegion(reg).agregarPersona(nom, r, ed);
+                else if (funcionarioCheckBox.isSelected() & funcionT.getText() != null) {
+                    regiones.getRegion(reg).agregarPersona(nom, r, ed, funcionT.getText(), "Chileno");
+                } else {
+                    regiones.getRegion(reg).agregarPersona(nom, r, ed, "Ciudadano", "Extranjero");
+                }
             } catch(Exception ex) {
                 JOptionPane.showMessageDialog(ventana, ex.getMessage());
                 return;
             }
-
 
             ventana.setContentPane(new VentanaMenu(regiones, ventana).panel);
             ventana.setSize(512, 512);

@@ -23,7 +23,8 @@ public class Registro_Civil {
 		try {
 			regiones.leerTxt("registro.csv");
 		} catch (Exception e) {
-			System.out.println("No se pudo leer el archivo registro.txt");
+			System.out.println("No se pudo leer el archivo registro.csv");
+			System.out.println(e.getMessage());
 		}
 		JFrame frame = inicializarVentana(regiones);
 		new VentanaMenu(regiones, frame);
