@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Regiones {
     private ArrayList<Region> regiones;
@@ -33,9 +34,14 @@ public class Regiones {
 
         while( ((lineText = lectorLineas.readLine())) != null) {
             String[] tokens = lineText.split(",");
-            Region region = this.regiones.get(Integer.parseInt(tokens[0]) - 1); // [0] = num region, [1] = nombre, [2] = rut, [3] = edad
+            Region region = this.regiones.get(Integer.parseInt(tokens[0]) - 1);
+            // [0] = num region, [1] = nombre, [2] = rut, [3] = edad, [4] = funcion, [5] = bool extranjero
             try {
-                region.agregarPersona(tokens[1], tokens[2], Integer.parseInt(tokens[3]));
+                if (Objects.equals(tokens[4], "Ciudadano") & Objects.equals(tokens[5], "Chileno"))
+                    region.agregarPersona(tokens[1], tokens[2], Integer.parseInt(tokens[3]));
+                else {
+                    region.agregarPersona(tokens[1], tokens[2], Integer.parseInt(tokens[3]), tokens[4], tokens[5]);
+                }
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -44,13 +50,13 @@ public class Regiones {
         lectorLineas.close();
     }
 
+    //
     public void escribirTxt(String filepath) throws IOException {
         FileWriter escritor = new FileWriter(filepath, false);
         String linea = null;
-        // usar getPersonas() y recorrer
-        //(persona.getRegion().getNum() +","+ persona.getNombre() +","+ persona.getRut() +","+ persona.getEdad())
         for (Persona persona : this.getPersonas()) {
-            linea = (persona.getRegion().getNum() +","+ persona.getNombre() +","+ persona.getRut() +","+ persona.getEdad());
+            Object[] obj = persona.getObjs();
+            linea = (persona.getRegion().getNum() +","+ obj[1] +","+ obj[2] +","+ obj[3] +","+ obj[4] +","+ obj[5]);
             escritor.write(linea);
             escritor.write(System.getProperty("line.separator")); //escribe newline
         }
