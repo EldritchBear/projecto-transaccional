@@ -3,4 +3,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="Registro_Civil/src"/>
 	<classpathentry kind="output" path="Registro_Civil/bin"/>
+	<classpathentry exported="true" kind="lib" path="src/forms_rt.jar"/>
 </classpath>

@@ -1,5 +1,3 @@
-
-
 public class Persona {
 	private Region region;
 	private String nombre;

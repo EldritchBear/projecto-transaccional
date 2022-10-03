@@ -5,19 +5,7 @@ public class Ciudadano extends Persona{
 		super(reg,nom,rutImportada,edadImportada);
 		extranjero = esExtranjero;
 	}
-	
-	public void mostrarPersona() {
-		System.out.println(getRegion());
-		System.out.println(getNombre());
-		System.out.println(getRut());
-		System.out.println(getEdad());
-		if(extranjero) {
-			System.out.println("es extranjero");
-		}
-		else {
-			System.out.println("es chileno");
-		}
-	}
+
 	public Object[] getObjs() {
 		String nacionalidad;
 		if (extranjero) {

@@ -50,6 +50,7 @@ public class Regiones {
         lectorLineas.close();
     }
 
+    //
     public void escribirTxt(String filepath) throws IOException {
         FileWriter escritor = new FileWriter(filepath, false);
         String linea = null;

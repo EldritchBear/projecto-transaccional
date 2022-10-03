@@ -51,11 +51,10 @@ public class Region {
 	public String getNombre() {
 		return this.nombre;
 	}
-	// cambiar el nombre de una región no es necesario, por lo tanto, no hay setter
 
 	public ArrayList<Persona> getArray() {
 		Persona[] array = mapa.values().toArray(new Persona[0]);
-		return new ArrayList<>(List.of(array));
+		return new ArrayList<>(Arrays.asList(array));
 	}
 
 	public int getNum() {

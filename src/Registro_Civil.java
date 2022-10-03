@@ -5,7 +5,7 @@ class WindowEventHandler extends WindowAdapter {
 	public WindowEventHandler(Regiones regiones) {
 		this.regiones = regiones;
 	}
-	public void windowClosing(WindowEvent evt) {
+	public void windowClosing(WindowEvent evt) { // guarda los datos al cerrar la ventana
 		try {
 			regiones.escribirTxt("registro.csv");
 		} catch(Exception e) {
